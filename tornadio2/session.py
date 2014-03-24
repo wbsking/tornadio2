@@ -75,7 +75,7 @@ class Session(sessioncontainer.SessionBase):
     `is_closed`
         Check if session is closed or not.
     """
-    def __init__(self, conn, server, request, expiry=None):
+    def __init__(self, conn, server, request, expiry=None, session_end=None):
         """Session constructor.
 
         `conn`
@@ -88,7 +88,7 @@ class Session(sessioncontainer.SessionBase):
             Session expiry
         """
         # Initialize session
-        super(Session, self).__init__(None, expiry)
+        super(Session, self).__init__(None, expiry, session_end)
 
         self.server = server
         self.send_queue = []
@@ -144,8 +144,8 @@ class Session(sessioncontainer.SessionBase):
             Associate active Tornado handler with the session
         """
         # Check if session already has associated handler
-        if self.handler is not None:
-            return False
+        #if self.handler is not None:
+        #    return False
 
         # If IP address don't match - refuse connection
         if self.server.settings['verify_remote_ip'] and handler.request.remote_ip != self.remote_ip:

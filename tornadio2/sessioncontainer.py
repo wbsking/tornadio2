@@ -28,11 +28,13 @@ from hashlib import md5
 from random import random
 
 
-def _random_key():
+def _random_key(session_end):
     """Return random session key"""
     i = md5()
     i.update('%s%s' % (random(), time()))
-    return i.hexdigest()
+    if not session_end:
+        session_id = 1
+    return i.hexdigest() + str(session_id)
 
 
 class SessionBase(object):
@@ -40,7 +42,7 @@ class SessionBase(object):
     Derive from this object to store additional data.
     """
 
-    def __init__(self, session_id=None, expiry=None):
+    def __init__(self, session_id=None, expiry=None, session_end=None):
         """Constructor.
 
         ``session_id``
@@ -49,7 +51,7 @@ class SessionBase(object):
         ``expiry``
             Expiration time. If not provided, will never expire.
         """
-        self.session_id = session_id or _random_key()
+        self.session_id = session_id or _random_key(session_end)
         self.promoted = None
         self.expiry = expiry
 
