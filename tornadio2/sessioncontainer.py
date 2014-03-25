@@ -34,7 +34,7 @@ def _random_key(session_end):
     i.update('%s%s' % (random(), time()))
     if not session_end:
         session_id = 1
-    return i.hexdigest() + str(session_id)
+    return i.hexdigest() + str(session_end)
 
 
 class SessionBase(object):
