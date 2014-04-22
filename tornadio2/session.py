@@ -144,8 +144,8 @@ class Session(sessioncontainer.SessionBase):
             Associate active Tornado handler with the session
         """
         # Check if session already has associated handler
-        #if self.handler is not None:
-        #    return False
+        if self.handler is not None:
+            self.handler.close()
 
         # If IP address don't match - refuse connection
         if self.server.settings['verify_remote_ip'] and handler.request.remote_ip != self.remote_ip:
