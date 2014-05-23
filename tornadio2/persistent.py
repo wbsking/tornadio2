@@ -117,7 +117,7 @@ class TornadioWebSocketHandler(WebSocketHandler):
     def _detach(self):
         if self.session is not None:
             if self._is_active:
-                if self.handler == self:
+                if self.session.handler == self:
                     self.session.stop_heartbeat()
                     self.session.remove_handler(self)
 
