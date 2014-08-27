@@ -33,7 +33,7 @@ def _random_key(session_end):
     i = md5()
     i.update('%s%s' % (random(), time()))
     if not session_end:
-        session_id = 1
+        session_end = 1
     return i.hexdigest() + str(session_end)
 
 
